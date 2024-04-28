@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+    tools {nodejs "node"}
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/albysoltraining/student-reg-class.git'
+            }
+        }
+        stage('Install Packages') {
+            steps {
+                bat 'npm install'
+            }
+        }
+        stage('Lint') {
+            steps {
+                bat 'npx jshint ./src/app.js'
+            }
+        }
+    }
+    post {
+        success {
+            // Example: Send notification on success
+            mail to: 'helloanilk@gmail.com',
+                 subject: "Build Successful - '${env.JOB_NAME}'",
+                 body: 'Your build was successful. Congratulations!'
+        }
+        failure {
+            // Example: Send notification on failure
+            mail to: 'helloanilk@gmail.com',
+                 subject: "Build Failed - '${env.JOB_NAME}'",
+                 body: 'Your build failed. Please check the Jenkins logs for more information.'
+        }
+    }
+}
