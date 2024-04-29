@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const path = require('path');
 
-const dbService = require('./db-service.js')
+const dbService = require('./db-service.js');
 
 const app = express();
 const PORT = 3002;
